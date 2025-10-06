@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +25,23 @@ Route::middleware('auth')->group(function () {
 // Route::get('/seller', function () {
 //     return view('Seller.index');
 // });
+
+// routes/web.php
+Route::get('/User/create/{id}', [UserController::class, 'create'])->name('User.create');
+Route::post('/User/store', [UserController::class, 'store'])->name('User.store');
+
+Route::resource('User', UserController::class);
+
+Route::get('/User/create/{id}', [UserController::class, 'create'])->name('User.create');
+
+Route::get('/dashboard', [UserController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+    Route::get('/forbiden', function () {
+    return response()->view('forbiden', [], 403);
+})->name('forbiden');
+
 
 
 Route::middleware(['auth', 'role:Seller'])->group(function () {

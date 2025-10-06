@@ -13,7 +13,7 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        $produk = Produk::all();
+        $produk = Produk::paginate(10);
         return view('Seller.index', compact('produk'));
     }
 
@@ -43,9 +43,9 @@ class ProdukController extends Controller
 
         if ($request->hasFile('gambar')) {
             $fileName = time().'_'.$request->gambar->getClientOriginalName();
-            // simpan ke storage/app/public/uploads
-            $path = $request->gambar->storeAs('uploads', $fileName, 'public');
-            $data['gambar'] = $path; 
+            // simpan ke storage/app/public/produk
+            $path = $request->gambar->storeAs('produk', $fileName, 'public');
+            $data['gambar'] = $path;
         }
 
         Produk::create($data);
@@ -58,7 +58,8 @@ class ProdukController extends Controller
      */
     public function show(string $id)
     {
-        //
+         $produk = Produk::findOrFail($id);
+        return view('Seller.produk.show', compact('produk'));
     }
 
     /**
@@ -78,24 +79,28 @@ class ProdukController extends Controller
     // 1. Validasi
     $validated = $request->validate([
         'nama'      => 'required|string|max:255',
-        'harga'     => 'required|numeric',
+        'harga'     => 'required|integer|min:1',
         'stok'      => 'required|integer|min:0',
         'status'    => 'required|in:Aktif,Non-aktif',
-        'deskripsi' => 'nullable|string',
+        'deskripsi' => 'nullable|string|max:500',
         'gambar'    => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
     // 2. Cari produk
     $produk = Produk::findOrFail($id);
 
-    // 3. Handle upload gambar baru (langsung ke folder public/produk)
+    // 3. Handle upload gambar baru
     if ($request->hasFile('gambar')) {
-        $file       = $request->file('gambar');
-        $fileName   = time() . '_' . $file->getClientOriginalName();
-        $file->move(public_path('produk'), $fileName);
+        // Hapus gambar lama jika ada
+        if ($produk->gambar) {
+            Storage::disk('public')->delete($produk->gambar);
+        }
+
+        $fileName = time() . '_' . $request->gambar->getClientOriginalName();
+        $path = $request->gambar->storeAs('produk', $fileName, 'public');
 
         // Simpan path di DB
-        $validated['gambar'] = 'produk/' . $fileName;
+        $validated['gambar'] = $path;
     } else {
         // Kalau tidak upload gambar baru, tetap pakai lama
         unset($validated['gambar']);
@@ -116,8 +121,8 @@ class ProdukController extends Controller
     $produk = Produk::findOrFail($id);
 
     // 2. Hapus file gambar kalau ada
-    if ($produk->gambar && file_exists(public_path($produk->gambar))) {
-        unlink(public_path($produk->gambar));
+    if ($produk->gambar) {
+        Storage::disk('public')->delete($produk->gambar);
     }
 
     // 3. Hapus data produk dari database
