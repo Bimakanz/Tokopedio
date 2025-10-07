@@ -1,22 +1,22 @@
 <x-app-layout>
     <div class="p-8">
         <h1
-            class=" p-4 rounded-lg text-5xl font-extrabold text-center bg-gradient-to-r from-indigo-100 via-purple-900 to-pink-100 text-transparent bg-clip-text drop-shadow-2xl animate-pulse  ">
+            class=" p-5 rounded-lg shadow-xl  text-5xl font-extrabold text-center bg-gradient-to-r from-indigo-200 via-purple-700 to-pink-200 text-transparent bg-clip-text drop-shadow ">
             Selamat Datang, {{ Auth::user()->name }} !
         </h1>
 
-        <div class="p-4 rounded-lg mt-5">
+        <div class="p-10 rounded-lg shadow-lg mt-5 border-black-900">
             <div class="flex flex-row justify-between">
                 <div class="text-white">
                     <h1
-                        class="font-bold text-3xl bg-gradient-to-r from-indigo-100 via-purple-900 to-pink-100 text-transparent bg-clip-text drop-shadow-2xl animate-pulse">
+                        class="font-bold text-3xl bg-gradient-to-r from-indigo-200 via-purple-700 to-pink-200 text-transparent bg-clip-text drop-shadow">
                         Kelola Produk</h1>
                     <p
-                        class="text-center text-2xl bg-gradient-to-r from-indigo-500 via-purple-900 to-pink-500 text-transparent bg-clip-text drop-shadow-2xl animate-pulse">
+                        class="text-center text-2xl bg-gradient-to-r from-indigo-200 via-purple-700 to-pink-200 text-transparent bg-clip-text drop-shadow">
                         Kelola produk Anda dengan mudah di sini.</p>
                 </div>
                 <a href="Seller/produk/create"
-                    class="p-4 rounded-lg text-xl bg-slate-800 text-center bg-gradient-to-r from-indigo-100 via-purple-900 to-pink-100 drop-shadow-2xl animate-pulse ">Tambah
+                    class="p-4 rounded-lg inline-flex justify-center items-center px- py-2 rounded-lg text-white text-center bg-gradient-to-r from-indigo-200 via-purple-700 to-pink-200 hover:bg-indigo-700 text-xl">Tambah
                     Produk</a>
             </div>
         </div>
@@ -70,14 +70,14 @@
                                                         </td>
                                                         <th class="px-7 py-3">
                                                             <span
-                                                                class="{{ $p['status'] === 'Aktif' ? 'text-green-500' : 'text-red-500' }} font-semibold">
+                                                                class=" {{ $p['status'] === 'Aktif' ? 'text-green-500' : 'text-red-500' }} uppercase font-semibold">
                                                                 {{ $p['status'] }}
                                                             </span>
                                                         </th>
 
                                                         <th class="px-7 py-3">
                                                         <a href="{{ route('produk.show', $p->id) }}"
-                                                            class="inline-flex justify-center items-center px-4 py-2 text-center bg-gradient-to-r from-indigo-100 via-purple-900 to-pink-100 drop-shadow-2xl animate-pulse text-white text-sm font-semibold rounded-lg shadow-md hover:bg-gradient-to-r hover:from-indigo-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
+                                                            class="inline-flex justify-center items-center px-4 py-2 rounded-lg text-white text-center bg-indigo-600 hover:bg-indigo-700">
                                                         Details
                                                         </a>
                                                         </th>
@@ -103,7 +103,7 @@
             <div class="py-1">
                 <!-- Tombol Edit -->
                 <a href="{{ route('produk.edit', $p->id) }}"
-                    class="block px-4 py-2 text-sm text-gray-200 hover:bg-yellow-600 hover:text-white">
+                    class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600 hover:text-white">
                     ✏️ Edit
                 </a>
 
@@ -112,7 +112,7 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit" onclick="return confirm('Yakin hapus?')"
-                        class="w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-red-600 hover:text-white">
+                        class="w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-gray-600 hover:text-white">
                         🗑️ Hapus
                     </button>
                 </form>

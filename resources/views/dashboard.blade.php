@@ -17,7 +17,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             @foreach ($produk as $p)
-                <div class="bg-white shadow-lg rounded-2xl overflow-hidden flex flex-col">
+                <div class="bg-white shadow-xl rounded-2xl overflow-hidden flex flex-col">
 
                     <!-- Gambar Produk -->
                     <div class="h-48 w-full overflow-hidden">
@@ -45,7 +45,7 @@
 
                         <!-- Tombol Beli -->
                         <a href="{{ route('User.create', $p->id) }}"
-                            class="block text-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg py-2 transition">
+                            class="block shadow-xl text-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg py-2 transition">
                             🛒 Beli
                         </a>
                     </div>

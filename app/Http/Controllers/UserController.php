@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produk;
 use App\Models\User;
+use DB;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -34,21 +35,49 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-        'nama'   => 'required|string|max:255',
-        'Tanggal_pinjam'  => 'required|date',
-        'Tanggal_balikin' => 'required|date|after_or_equal:Tanggal_pinjam',
-        'jumlah' => 'required|integer|min:1',
-        'Nama_peminjam' => 'required|string|max:255',
-    ]);
-    $produk = Produk::where('nama', $request->nama)->first();
-    $produk->decrement('jumlah', $request->jumlah);
+        // ✅ Validasi input
+        $data = $request->validate([
+            'produk_id'     => 'required|exists:produks,id',
+            'nama_pemesan'  => 'required|string',
+            'alamat'        => 'required|string',
+            'jumlah'        => 'required|integer|min:1',
+            'kurir'         => 'required|in:JNE,JNT,POS',
+            'metode'        => 'required|in:COD,TRANSFER',
+        ]);
 
-    Form::create($validated);
+        // ✅ Ambil produk berdasarkan ID
+        $produk = Produk::findOrFail($data['produk_id']);
 
-    return redirect()->route('form.index')
-                     ->with('success', 'Produk berhasil dipinjam!');
+        // ✅ Hitung total harga
+        $harga = (int)$produk->harga;
+        $jumlah = (int)$data['jumlah'];
+        $total_harga = $harga * $jumlah;
+
+        // ✅ Jalankan transaksi database
+        DB::transaction(function () use ($request, $produk, $jumlah, $total_harga) {
+            // Simpan data pembelian (pastikan model User di sini adalah model transaksi pembelian, bukan akun user)
+            User::create([
+                'user_id'      => auth()->id(),
+                'produk_id'    => $produk->id,
+                'nama_pemesan' => $request->nama_pemesan,
+                'alamat'       => $request->alamat,
+                'jumlah'       => $request->jumlah,
+                'kurir'        => $request->kurir,
+                'metode'       => $request->metode,
+                'total_harga'  => $total_harga,
+            ]);
+
+            // Kurangi stok produk
+            $produk->update([
+                'stok'   => $produk->stok - $jumlah,
+                'status' => $produk->stok - $jumlah <= 0 ? 'Non-aktif' : 'Aktif',
+            ]);
+        });
+
+        // ✅ Redirect kembali dengan pesan sukses
+        return redirect()->route('dashboard')->with('success', 'Order berhasil dibuat!');
     }
+            
 
     /**
      * Display the specified resource.
