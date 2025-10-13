@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
         $produk = Produk::paginate(10);
@@ -18,17 +16,11 @@ class ProdukController extends Controller
         
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('Seller.produk.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -54,27 +46,20 @@ class ProdukController extends Controller
         return redirect()->route('Seller.index')->with('success', 'Barang berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
          $produk = Produk::findOrFail($id);
         return view('Seller.produk.show', compact('produk'));
     }
+    
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $produk = Produk::findOrFail($id);
         return view('Seller.produk.edit', compact('produk'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, string $id)
 {
     // 1. Validasi
@@ -113,9 +98,7 @@ class ProdukController extends Controller
     // 5. Redirect balik dengan pesan sukses
     return redirect()->route('Seller.index')->with('success', 'Produk berhasil diperbarui!');
 }
-    /**
-     * Remove the specified resource from storage.
-     */
+    
    public function destroy(string $id)
 {
     // 1. Cari produk berdasarkan ID

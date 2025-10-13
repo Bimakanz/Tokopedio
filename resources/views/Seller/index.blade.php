@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="p-8">
         <h1
-            class=" p-5 rounded-lg shadow-xl  text-5xl font-extrabold text-center bg-gradient-to-r from-indigo-200 via-purple-700 to-pink-200 text-transparent bg-clip-text drop-shadow ">
+            class=" p-5 rounded-lg shadow-xl  text-5xl font-extrabold text-center text-white bg-clip-text drop-shadow ">
             Selamat Datang, {{ Auth::user()->name }} !
         </h1>
 
@@ -9,14 +9,14 @@
             <div class="flex flex-row justify-between">
                 <div class="text-white">
                     <h1
-                        class="font-bold text-3xl bg-gradient-to-r from-indigo-200 via-purple-700 to-pink-200 text-transparent bg-clip-text drop-shadow">
+                        class="font-bold text-3xl text-white bg-clip-text drop-shadow">
                         Kelola Produk</h1>
                     <p
-                        class="text-center text-2xl bg-gradient-to-r from-indigo-200 via-purple-700 to-pink-200 text-transparent bg-clip-text drop-shadow">
+                        class="text-center text-2xl text-white bg-clip-text drop-shadow">
                         Kelola produk Anda dengan mudah di sini.</p>
                 </div>
                 <a href="Seller/produk/create"
-                    class="p-4 rounded-lg inline-flex justify-center items-center px- py-2 rounded-lg text-white text-center bg-gradient-to-r from-indigo-200 via-purple-700 to-pink-200 hover:bg-indigo-700 text-xl">Tambah
+                    class="p-4 rounded-lg inline-flex justify-center items-center px- py-2 rounded-lg bg-indigo-600 text-white text-center text-xl">Tambah
                     Produk</a>
             </div>
         </div>

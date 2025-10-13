@@ -10,6 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     Selamat Datang Mang, {{ Auth::user()->name }} !
+
                 </div>
             </div>
         </div>
@@ -17,6 +18,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             @foreach ($produk as $p)
+                @if ($p->status === 'Aktif')
                 <div class="bg-white shadow-xl rounded-2xl overflow-hidden flex flex-col">
 
                     <!-- Gambar Produk -->
@@ -50,6 +52,7 @@
                         </a>
                     </div>
                 </div>
+                @endif
             @endforeach
         </div>
     </div>

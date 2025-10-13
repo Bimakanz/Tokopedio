@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
-use App\Models\User;
+use App\Models\Order;
 use DB;
 use Illuminate\Http\Request;
 
@@ -45,8 +45,7 @@ class UserController extends Controller
             'metode'        => 'required|in:COD,TRANSFER',
         ]);
 
-        // ✅ Ambil produk berdasarkan ID
-        $produk = Produk::findOrFail($data['produk_id']);
+        $produk = Produk::where('status', 'Aktif')->findOrFail($data['produk_id']);
 
         // ✅ Hitung total harga
         $harga = (int)$produk->harga;
@@ -56,7 +55,7 @@ class UserController extends Controller
         // ✅ Jalankan transaksi database
         DB::transaction(function () use ($request, $produk, $jumlah, $total_harga) {
             // Simpan data pembelian (pastikan model User di sini adalah model transaksi pembelian, bukan akun user)
-            User::create([
+            Order::create([
                 'user_id'      => auth()->id(),
                 'produk_id'    => $produk->id,
                 'nama_pemesan' => $request->nama_pemesan,
@@ -74,7 +73,7 @@ class UserController extends Controller
             ]);
         });
 
-        // ✅ Redirect kembali dengan pesan sukses
+
         return redirect()->route('dashboard')->with('success', 'Order berhasil dibuat!');
     }
             
