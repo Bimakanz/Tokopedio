@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="max-w-4xl mx-auto py-10 px-6">
         <!-- Judul -->
-        <h1 class="text-center text-3xl font-extrabold mb-10 bg-gradient-to-r from-indigo-200 via-purple-700 to-pink-200 text-transparent bg-clip-text drop-shadow">
+        <h1 class="text-center text-3xl font-extrabold mb-10 text-white bg-clip-text drop-shadow">
             Detail Produk
         </h1>
 

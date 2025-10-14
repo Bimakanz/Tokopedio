@@ -128,6 +128,9 @@
                         <button type="submit" class="ml-3 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                             Perbarui Status
                         </button>
+                        <a href="{{ route('Pemesanan.index') }}" class="ml-3 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                            Kembali
+                        </a>
                     </div>
                 </form>
             </div>

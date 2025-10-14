@@ -39,8 +39,19 @@ class PemesananController extends Controller
      */
     public function show(string $id)
     {
-        $order = Order::with('produk')->findOrFail($id);
-        return view('Pemesanan.show', compact('order'));
+        // Ambil order beserta relasi agar efisien
+        $order = Order::with(['produk', 'user'])->findOrFail($id);
+
+        // Authorization lebih dulu agar tidak ada unreachable code
+        $user = Auth::user();
+        if ($user && $user->role !== 'Seller' && $order->user_id !== $user->id) {
+            abort(403, 'Kamu tidak punya akses ke pesanan ini.');
+        }
+
+        // Kembalikan view dengan data yang diperlukan
+        return view('Pemesanan.show', [
+            'order' => $order,
+        ]);
     }
 
     /**
@@ -56,6 +67,10 @@ class PemesananController extends Controller
      */
     public function updateStatus(Request $request, $id)
     {
+        $request->validate([
+            'status' => 'required|in:Pending,Processed,Canceled,Confirmed,Sending'
+        ]);
+
         $order = Order::findOrFail($id);
 
         $order->status = $request->status;

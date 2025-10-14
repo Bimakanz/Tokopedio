@@ -72,9 +72,9 @@
             <!-- Alamat -->
             <div class="flex justify-between items-center border-t pt-4">
                 <span class="text-lg font-semibold text-gray-700 dark:text-gray-300">Alamat</span>
-                <span class="dark:text-white text-lg font-semibold">
+                <p class="text-lg font-semibold dark:text-white leading-relaxed">
                     {{ $orders->alamat }}
-                </span>
+                </p>
             </div>
 
             <!-- Status -->
