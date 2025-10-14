@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ProdukController;
@@ -46,21 +47,20 @@ Route::get('/forbiden', function () {
 
 // use App\Http\Controllers\Seller\OrderController;
 
-Route::middleware(['auth', 'role:seller'])->prefix('seller')->name('seller.')->group(function () {
-    Route::get('/order', [OrderController::class, 'index'])->name('orders.index');
-    Route::post('/order/{id}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
-});
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/pemesanan', [OrderController::class, 'index'])->name('User.index');
     Route::get('/pemesanan/{id}', [OrderController::class, 'show'])->name('User.show');
 });
-
 Route::middleware(['auth', 'role:Seller'])->group(function () {
     Route::resource('Seller', SellerController::class);
     Route::resource('Seller/produk', ProdukController::class);
 });
 
-
+Route::middleware(['auth', 'role:Seller'])->group(function () {
+    Route::get('/order', [PemesananController::class, 'index'])->name('Pemesanan.index');
+    Route::put('/order/{id}', [PemesananController::class, 'updateStatus'])->name('Pemesanan.updateStatus');
+    Route::get('/order/{id}', [PemesananController::class, 'show'])->name('Pemesanan.show');
+});
 require __DIR__ . '/auth.php';

@@ -1,23 +1,21 @@
 <x-app-layout>
     <div class="p-8">
-        <h1
-            class=" p-5 rounded-lg shadow-xl  text-5xl font-extrabold text-center text-white bg-clip-text drop-shadow ">
+        <h1 class=" p-5 rounded-lg shadow-xl  text-5xl font-extrabold text-center text-white bg-clip-text drop-shadow ">
             Selamat Datang, {{ Auth::user()->name }} !
         </h1>
 
         <div class="p-10 rounded-lg shadow-lg mt-5 border-black-900">
             <div class="flex flex-row justify-between">
                 <div class="text-white">
-                    <h1
-                        class="font-bold text-3xl text-white bg-clip-text drop-shadow">
+                    <h1 class="font-bold text-3xl text-white bg-clip-text drop-shadow">
                         Kelola Produk</h1>
-                    <p
-                        class="text-center text-2xl text-white bg-clip-text drop-shadow">
+                    <p class="text-center text-2xl text-white bg-clip-text drop-shadow">
                         Kelola produk Anda dengan mudah di sini.</p>
                 </div>
                 <a href="Seller/produk/create"
                     class="p-4 rounded-lg inline-flex justify-center items-center px- py-2 rounded-lg bg-indigo-600 text-white text-center text-xl">Tambah
                     Produk</a>
+
             </div>
         </div>
 
@@ -53,85 +51,82 @@
                                     </tr>
                                 @else
                                     @foreach ($produk as $p)
-                                                    <tr class="border-b dark:border-gray-700">
-                                                        <td class="px-5 py-3">{{ $loop->iteration }}</td>
-                                                        <td class="px-4 py-3">
-                                                            @if($p['gambar'])
-                                                                <img src="{{ asset('storage/' . $p['gambar']) }}" alt=""
-                                                                    class="w-20 h-20 object-cover rounded-xl mb-3">
-                                                            @endif
-                                                        </td>
-                                                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                            {{ $p['nama'] }}
-                                                        </td>
-                                                        <td class="px-7 py-3">{{ $p['stok'] }}</td>
-                                                        <td class="px-4 py-3 text-green-400 font-semibold">
-                                                            Rp. {{ number_format($p->harga, 2, ',', '.') }}
-                                                        </td>
-                                                        <th class="px-7 py-3">
-                                                            <span
-                                                                class=" {{ $p['status'] === 'Aktif' ? 'text-green-500' : 'text-red-500' }} uppercase font-semibold">
-                                                                {{ $p['status'] }}
-                                                            </span>
-                                                        </th>
+                                        <tr class="border-b dark:border-gray-700">
+                                            <td class="px-5 py-3">{{ $loop->iteration }}</td>
+                                            <td class="px-4 py-3">
+                                                @if($p['gambar'])
+                                                    <img src="{{ asset('storage/' . $p['gambar']) }}" alt=""
+                                                        class="w-20 h-20 object-cover rounded-xl mb-3">
+                                                @endif
+                                            </td>
+                                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                {{ $p['nama'] }}
+                                            </td>
+                                            <td class="px-7 py-3">{{ $p['stok'] }}</td>
+                                            <td class="px-4 py-3 text-green-400 font-semibold">
+                                                Rp. {{ number_format($p->harga, 2, ',', '.') }}
+                                            </td>
+                                            <th class="px-7 py-3">
+                                                <span
+                                                    class=" {{ $p['status'] === 'Aktif' ? 'text-green-500' : 'text-red-500' }} uppercase font-semibold">
+                                                    {{ $p['status'] }}
+                                                </span>
+                                            </th>
 
-                                                        <th class="px-7 py-3">
-                                                        <a href="{{ route('produk.show', $p->id) }}"
-                                                            class="inline-flex justify-center items-center px-4 py-2 rounded-lg text-white text-center bg-indigo-600 hover:bg-indigo-700">
-                                                        Details
-                                                        </a>
-                                                        </th>
+                                            <th class="px-7 py-3">
+                                                <a href="{{ route('produk.show', $p->id) }}"
+                                                    class="inline-flex justify-center items-center px-4 py-2 rounded-lg text-white text-center bg-indigo-600 hover:bg-indigo-700">
+                                                    Details
+                                                </a>
+                                            </th>
 
-                                                        <td class="relative px-4 py-3 text-right">
-    <div x-data="{ open: false }" class="inline-block text-left">
-        <!-- Tombol utama (⋮) -->
-        <button @click="open = !open"
-            class="p-2 rounded-full hover:bg-gray-700 focus:outline-none transition">
-            <!-- Icon titik tiga lebih tebal -->
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                 class="h-7 w-7 text-white font-bold" 
-                 viewBox="0 0 24 24" fill="currentColor">
-                <circle cx="12" cy="6" r="1.8" />
-                <circle cx="12" cy="12" r="1.8" />
-                <circle cx="12" cy="18" r="1.8" />
-            </svg>
-        </button>
+                                            <td class="relative px-4 py-3 text-right">
+                                                <div x-data="{ open: false }" class="inline-block text-left">
+                                                    <!-- Tombol utama (⋮) -->
+                                                    <button @click="open = !open"
+                                                        class="p-2 rounded-full hover:bg-gray-700 focus:outline-none transition">
+                                                        <!-- Icon titik tiga lebih tebal -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="h-7 w-7 text-white font-bold" viewBox="0 0 24 24"
+                                                            fill="currentColor">
+                                                            <circle cx="12" cy="6" r="1.8" />
+                                                            <circle cx="12" cy="12" r="1.8" />
+                                                            <circle cx="12" cy="18" r="1.8" />
+                                                        </svg>
+                                                    </button>
 
-        <!-- Dropdown menu -->
-        <div x-show="open" @click.away="open = false"
-            class="origin-top-right absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
-            <div class="py-1">
-                <!-- Tombol Edit -->
-                <a href="{{ route('produk.edit', $p->id) }}"
-                    class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600 hover:text-white">
-                    ✏️ Edit
-                </a>
+                                                    <!-- Dropdown menu -->
+                                                    <div x-show="open" @click.away="open = false"
+                                                        class="origin-top-right absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
+                                                        <div class="py-1">
+                                                            <!-- Tombol Edit -->
+                                                            <a href="{{ route('produk.edit', $p->id) }}"
+                                                                class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600 hover:text-white">
+                                                                ✏️ Edit
+                                                            </a>
 
-                <!-- Tombol Hapus -->
-                <form action="{{ route('produk.destroy', $p->id) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" onclick="return confirm('Yakin hapus?')"
-                        class="w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-gray-600 hover:text-white">
-                        🗑️ Hapus
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</td>
+                                                            <!-- Tombol Hapus -->
+                                                            <form action="{{ route('produk.destroy', $p->id) }}" method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" onclick="return confirm('Yakin hapus?')"
+                                                                    class="w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-gray-600 hover:text-white">
+                                                                    🗑️ Hapus
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
 
-                                                    </tr>
+                                        </tr>
                                     @endforeach
                                 @endif
                             </tbody>
-
                         </table>
                     </div>
                 </div>
             </div>
         </section>
-
     </div>
-
 </x-app-layout>

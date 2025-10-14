@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produk;
-use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Models\Produk;
 use Illuminate\Support\Facades\Auth;
-class SellerController extends Controller
+class PemesananController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $produk = Produk::all();
-        return view("Seller.index", compact("produk"));
+        $orders = Order::with('produk')->where('user_id', auth()->id())->latest()->get();
+        return view('Pemesanan.index', compact('orders'));
     }
 
     /**
@@ -22,15 +22,16 @@ class SellerController extends Controller
      */
     public function create()
     {
-      //
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($id)
     {
-       //
+        $order = Order::with('produk')->where('user_id', auth()->id())->findOrFail($id);
+        return view('Pemesanan.show', compact('order'));
     }
 
     /**
@@ -38,21 +39,7 @@ class SellerController extends Controller
      */
     public function show(string $id)
     {
-       // Ambil order beserta relasi agar efisien
-        $order = Order::with(['produk', 'user'])->findOrFail($id);
 
-        // Authorization lebih dulu agar tidak ada unreachable code
-        $user = Auth::user();
-        if ($user && $user->role !== 'Seller' && $order->user_id !== $user->id) {
-            abort(403, 'Kamu tidak punya akses ke pesanan ini.');
-        }
-
-        // Kembalikan view dengan data yang diperlukan (halaman User)
-        return view('User.show', [
-            'orders' => $order,
-            'produk' => $order->produk,
-        ]);
-        
     }
 
     /**

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class ProdukController extends Controller
 {
@@ -12,7 +14,8 @@ class ProdukController extends Controller
     public function index()
     {
         $produk = Produk::paginate(10);
-        return view('Seller.index', compact('produk'));
+        $orders = Order::where('user_id', Auth::id())->latest()->get();
+        return view('Seller.index', compact('produk', 'orders'));
         
     }
 
