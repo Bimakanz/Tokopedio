@@ -1,124 +1,114 @@
 <x-app-layout>
-    <div class="max-w-4xl mx-auto py-10 px-6">
-        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8 space-y-6">
-            <h1 class="text-center text-3xl font-extrabold mb-10 dark:text-white text-transparent bg-clip-text drop-shadow">
-                Detail Produk
+    <div class="max-w-7xl mx-auto py-10 px-6">
+        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8">
+            <h1 class="text-center text-3xl font-extrabold mb-8 dark:text-white text-transparent bg-clip-text drop-shadow">
+                Daftar Pesanan
             </h1>
 
-            <!-- Gambar -->
-            <div class="flex justify-center">
-                @if($orders->produk && $orders->produk->gambar)
-                    <img src="{{ asset('storage/' . $orders->produk->gambar) }}" alt="{{ $orders->produk->nama }}"
-                        class="w-80 h-80 object-cover rounded-xl shadow-md">
-                @else
-                    <div class="w-80 h-80 flex items-center justify-center bg-gray-200 text-gray-500 rounded-xl">
-                        Tidak ada gambar
-                    </div>
-                @endif
-            </div>
-
-            <!-- Nama -->
-            <div class="text-center">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $orders->produk->nama ?? '-' }}</h2>
-            </div>
-
-            <!-- Harga -->
-            <div class="flex justify-between items-center border-t pt-4">
-                <span class="text-lg font-semibold text-gray-700 dark:text-gray-300">Harga</span>
-                <span class="dark:text-white font-bold text-xl">
-                    Rp {{ number_format((int) $orders->total_harga, 0, ',', '.') }}
-                </span>
-            </div>
-
-            <!-- Metode -->
-            <div class="flex justify-between items-center border-t pt-4">
-                <span class="text-lg font-semibold text-gray-700 dark:text-gray-300">Metode</span>
-                <span class="text-lg uppercase font-semibold">
-                    @php
-                        $metodeColors = [
-                            'COD' => 'bg-yellow-500 text-white',
-                            'TRANSFER' => 'bg-white text-black',
-                        ];
-                        $metodeClass = $metodeColors[$orders->metode] ?? 'bg-gray-100 text-gray-700';
-                    @endphp
-                    <span class="{{ $metodeClass }} px-2 py-1 rounded-full">
-                        {{ $orders->metode }}
-                    </span>
-                </span>
-            </div>
-
-            <!-- Kurir -->
-            <div class="flex justify-between items-center border-t pt-4">
-                <span class="text-lg font-semibold text-gray-700 dark:text-gray-300">Kurir</span>
-                <span class="dark:text-white text-lg uppercase font-semibold">
-                    @php
-                        $kurirColors = [
-                            'JNE' => 'bg-yellow-500 text-white',
-                            'JNT' => 'bg-indigo-500 text-white',
-                            'POS' => 'bg-blue-500 text-white',
-                        ];
-                        $kurirClass = $kurirColors[$orders->kurir] ?? 'bg-gray-100 text-gray-700';
-                    @endphp
-                    <span class="{{ $kurirClass }} px-2 py-1 rounded-full">
-                        {{ $orders->kurir }}
-                    </span>
-                </span>
-            </div>
-
-            <!-- Alamat -->
-            <div class="flex justify-between items-center border-t pt-4">
-                <span class="text-lg font-semibold text-gray-700 dark:text-gray-300">Alamat</span>
-                <span class="dark:text-white text-lg font-semibold">
-                    {{ $orders->alamat }}
-                </span>
-            </div>
-
-            <!-- Status -->
-            <div class="border-t pt-4">
-                <div class="flex justify-between items-center">
-                    <span class="text-lg font-semibold text-gray-700 dark:text-gray-300">Status</span>
-                    <span class="dark:text-white text-lg uppercase font-semibold">
-                        @php
-                            $statusColors = [
-                                'Pending' => 'bg-yellow-500 text-white',
-                                'Processed' => 'bg-indigo-500 text-white',
-                                'Cancel' => 'bg-blue-500 text-white',
-                                'Confirmed' => 'bg-green-500 text-white',
-                                'Sending' => 'bg-orange-500 text-white',
-                                'Delivered' => 'bg-green-500 text-white',
-                            ];
-                            $statusClass = $statusColors[$orders->status] ?? 'bg-gray-100 text-gray-700';
-                        @endphp
-                        <span class="{{ $statusClass }} px-2 py-1 rounded-full">
-                            {{ $orders->status }}
-                        </span>
-                    </span>
+            @if($orders->count() > 0)
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Produk</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Gambar</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nama Pemesan</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Jumlah</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Harga</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Alamat</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Kurir</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Metode</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            @foreach($orders as $order)
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-750 transition">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $order->produk->nama ?? '-' }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($order->produk && $order->produk->gambar)
+                                        <img src="{{ asset('storage/' . $order->produk->gambar) }}" 
+                                             alt="{{ $order->produk->nama }}" 
+                                             class="w-16 h-16 object-cover rounded-lg shadow">
+                                    @else
+                                        <div class="w-16 h-16 flex items-center justify-center bg-gray-200 text-gray-500 rounded-lg">
+                                            -
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900 dark:text-white">{{ $order->nama_pemesan }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900 dark:text-white">{{ $order->jumlah }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-semibold text-green-600">
+                                        Rp {{ number_format((int) $order->total_harga, 0, ',', '.') }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 max-w-xs">
+                                    <div class="text-sm text-gray-900 dark:text-white break-words whitespace-normal">{{ $order->alamat }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                        @if($order->kurir == 'JNE') bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100
+                                        @elseif($order->kurir == 'JNT') bg-indigo-100 text-indigo-800 dark:bg-indigo-800 dark:text-indigo-100
+                                        @else bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100
+                                        @endif">
+                                        {{ $order->kurir }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                        @if($order->metode == 'COD') bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100
+                                        @else bg-white text-black dark:bg-gray-700 dark:text-white
+                                        @endif">
+                                        {{ $order->metode }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                        @if($order->status == 'Pending') bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100
+                                        @elseif($order->status == 'Processed') bg-indigo-100 text-indigo-800 dark:bg-indigo-800 dark:text-indigo-100
+                                        @elseif($order->status == 'Confirmed') bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100
+                                        @elseif($order->status == 'Sending') bg-orange-100 text-orange-800 dark:bg-orange-800 dark:text-orange-100
+                                        @else bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100
+                                        @endif">
+                                        {{ $order->status }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    @if(auth()->user()->role === 'Seller')
+                                    <form action="{{ route('Pemesanan.updateStatus', $order->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <select name="status" class="rounded-lg border-gray-300 dark:bg-gray-700 dark:text-white text-xs p-1">
+                                            <option value="Pending" {{ $order->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                            <option value="Processed" {{ $order->status == 'Processed' ? 'selected' : '' }}>Processed</option>
+                                            <option value="Sending" {{ $order->status == 'Sending' ? 'selected' : '' }}>Sending</option>
+                                            <option value="Canceled" {{ $order->status == 'Canceled' ? 'selected' : '' }}>Canceled</option>
+                                            <option value="Confirmed" {{ $order->status == 'Confirmed' ? 'selected' : '' }}>Confirmed</option>
+                                        </select>
+                                        <button type="submit" class="ml-1 bg-blue-600 text-white px-2 py-1 rounded text-xs hover:bg-blue-700">
+                                            Ubah
+                                        </button>
+                                    </form>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-
-                <!-- Ubah Status -->
-                <form action="{{ route('pemesanan.updateStatus', $orders->id) }}" method="POST" class="mt-4">
-                    @csrf
-                    @method('PUT')
-                    <select name="status" class="rounded-lg border-gray-300 dark:bg-gray-700 dark:text-white">
-                        <option value="Pending" {{ $orders->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="Processed" {{ $orders->status == 'Processed' ? 'selected' : '' }}>Processed</option>
-                        <option value="Sending" {{ $orders->status == 'Sending' ? 'selected' : '' }}>Sending</option>
-                        <option value="Delivered" {{ $orders->status == 'Delivered' ? 'selected' : '' }}>Delivered</option>
-                        <option value="Cancel" {{ $orders->status == 'Cancel' ? 'selected' : '' }}>Cancel</option>
-                    </select>
-                    <button type="submit" class="ml-2 bg-blue-600 text-white px-4 py-1 rounded-lg hover:bg-blue-700">
-                        Ubah
-                    </button>
-                </form>
-            </div>
-
-            <!-- Jumlah -->
-            <div class="flex justify-between items-center border-t pt-4">
-                <span class="text-lg font-semibold text-gray-700 dark:text-gray-300">Barang Dibeli</span>
-                <span class="dark:text-white font-semibold text-xl">
-                    {{ $orders->jumlah }} Barang
-                </span>
-            </div>
+            @else
+                <div class="text-center py-10">
+                    <p class="text-gray-600 dark:text-gray-400">Tidak ada pesanan ditemukan.</p>
+                </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

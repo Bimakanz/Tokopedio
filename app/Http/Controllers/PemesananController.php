@@ -13,7 +13,8 @@ class PemesananController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('produk')->where('user_id', auth()->id())->latest()->get();
+        // For sellers, show all orders
+        $orders = Order::with('produk')->latest()->get();
         return view('Pemesanan.index', compact('orders'));
     }
 
@@ -28,10 +29,9 @@ class PemesananController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($id)
+    public function store(Request $request)
     {
-        $order = Order::with('produk')->where('user_id', auth()->id())->findOrFail($id);
-        return view('Pemesanan.show', compact('order'));
+        //
     }
 
     /**
@@ -39,7 +39,8 @@ class PemesananController extends Controller
      */
     public function show(string $id)
     {
-
+        $order = Order::with('produk')->findOrFail($id);
+        return view('Pemesanan.show', compact('order'));
     }
 
     /**
@@ -53,9 +54,14 @@ class PemesananController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateStatus(Request $request, $id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        $order->status = $request->status;
+        $order->save();
+
+        return redirect()->back()->with('success', 'Status berhasil diperbarui!');
     }
 
     /**
