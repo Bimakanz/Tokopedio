@@ -27,7 +27,7 @@
                         <path d="M3 3H5L5.4 5M7 13H17L21 4H5.4M7 13L5.4 5M7 13L4.707 15.293C4.077 15.923 4.523 17 5.414 17H17M17 17C15.895 17 15 17.895 15 19C15 20.105 15.895 21 17 21C18.105 21 19 20.105 19 19C19 17.895 18.105 17 17 17ZM9 19C9 20.105 8.105 21 7 21C5.895 21 5 20.105 5 19C5 17.895 5.895 17 7 17C8.105 17 9 17.895 9 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500">
-                        {{ config('app.name', 'Tokopedio') }}
+                        {{ __('Tokopedio') }}
                     </span>
                 </div>
 
@@ -120,7 +120,7 @@
         </div>
 
         <footer class="py-6 text-center text-gray-500 text-sm">
-            <p>© {{ date('Y') }} {{ config('app.name', 'Tokopedio') }}. Hak Cipta Dilindungi.</p>
+            <p>© {{ date('Y') }} {{ config('app.name', 'Tokopedio') }}.</p>
         </footer>
     </body>
 </html>

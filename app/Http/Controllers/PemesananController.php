@@ -71,12 +71,59 @@ class PemesananController extends Controller
             'status' => 'required|in:Pending,Processed,Canceled,Confirmed,Sending'
         ]);
 
-        $order = Order::findOrFail($id);
+        $order = Order::with('produk')->findOrFail($id);
+        $previousStatus = $order->status;
+
+        // Status yang memerlukan pengurangan stok: Processed, Sending, Confirmed
+        $stockReducingStatuses = ['Processed', 'Sending', 'Confirmed'];
+        
+        // Jika status sebelumnya adalah Pending dan sekarang berubah ke status yang perlu pengurangan stok
+        if ($previousStatus === 'Pending' && in_array($request->status, $stockReducingStatuses)) {
+            // Kurangi stok produk
+            $order->produk->stok -= $order->jumlah;
+            $order->produk->save();
+        }
+        // Jika status sebelumnya termasuk yang memerlukan pengurangan stok dan sekarang menjadi Pending
+        elseif (in_array($previousStatus, $stockReducingStatuses) && $request->status === 'Pending') {
+            // Kembalikan stok produk
+            $order->produk->stok += $order->jumlah;
+            $order->produk->save();
+        }
+        // Jika status sebelumnya termasuk yang memerlukan pengurangan stok dan sekarang menjadi Canceled
+        elseif (in_array($previousStatus, $stockReducingStatuses) && $request->status === 'Canceled') {
+            // Kembalikan stok produk
+            $order->produk->stok += $order->jumlah;
+            $order->produk->save();
+        }
+        // Jika status sebelumnya adalah Canceled dan sekarang berubah ke status yang perlu pengurangan stok
+        elseif ($previousStatus === 'Canceled' && in_array($request->status, $stockReducingStatuses)) {
+            // Kurangi stok produk
+            $order->produk->stok -= $order->jumlah;
+            $order->produk->save();
+        }
+        // Jika status sebelumnya adalah Pending dan sekarang menjadi Canceled (tidak ada perubahan stok karena tidak dikurangi dari awal)
+        elseif ($previousStatus === 'Pending' && $request->status === 'Canceled') {
+            // Tidak perlu mengurangi stok karena sebelumnya juga tidak dikurangi
+        }
+        // Jika status sebelumnya adalah Canceled dan sekarang kembali ke Pending (tidak ada perubahan stok)
+        elseif ($previousStatus === 'Canceled' && $request->status === 'Pending') {
+            // Tidak ada perubahan stok
+        }
 
         $order->status = $request->status;
         $order->save();
 
-        return redirect()->back()->with('success', 'Status berhasil diperbarui!');
+        // Pesan notifikasi berdasarkan status
+        $statusMessages = [
+            'Pending' => 'Status pesanan diubah menjadi Pending.',
+            'Processed' => 'Status pesanan diubah menjadi Processed. Stok produk telah dikurangi.',
+            'Sending' => 'Status pesanan diubah menjadi Sending. Produk sedang dikirim.',
+            'Confirmed' => 'Status pesanan diubah menjadi Confirmed. Pesanan selesai.',
+            'Canceled' => 'Status pesanan diubah menjadi Canceled. Stok produk telah dikembalikan.'
+        ];
+
+        $message = $statusMessages[$request->status] ?? 'Status berhasil diperbarui!';
+        return redirect()->back()->with('success', $message);
     }
 
     /**

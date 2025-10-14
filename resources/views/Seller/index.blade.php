@@ -13,7 +13,7 @@
                     <p class="text-center text-2xl text-gray-300 mt-2">
                         Kelola produk Anda dengan mudah di sini.</p>
                 </div>
-                <a href="Seller/produk/create'"
+                <a href="Seller/produk/create"
                     class="p-4 rounded-xl inline-flex justify-center items-center px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center text-xl hover:from-indigo-700 hover:to-purple-700 transition">
                     Tambah Produk
                 </a>
