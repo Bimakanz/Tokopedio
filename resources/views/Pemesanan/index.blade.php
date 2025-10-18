@@ -92,8 +92,8 @@
                                             Rp {{ number_format((int) $order->total_harga, 0, ',', '.') }}
                                         </div>
                                     </td>
-                                    <td class="px-4 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                    <td class="px-5 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-2 inline-flex text-xs leading-5 font-semibold rounded-lg
                                                 @if($order->kurir == 'JNE') bg-yellow-500 text-white
                                                 @elseif($order->kurir == 'JNT') bg-indigo-500 text-white
                                                 @else bg-blue-500 text-white
@@ -102,7 +102,7 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-4 text-center whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                        <span class="px-2 py-2 inline-flex text-xs leading-5 font-semibold rounded-lg
                                                 @if($order->metode == 'COD') bg-yellow-500 text-white
                                                 @else bg-purple-500 text-white
                                                 @endif">
@@ -110,7 +110,7 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-4 text-center whitespace-nowrap">
-                                        <span class="px-2 uppercase inline-flex text-xs leading-5 font-semibold rounded-full
+                                        <span class="px-3 py-2 uppercase inline-flex text-xs leading-5 font-semibold rounded-lg
                                                 @if($order->status == 'Pending') bg-yellow-500 text-white
                                                 @elseif($order->status == 'Processed') bg-indigo-500 text-white
                                                 @elseif($order->status == 'Confirmed') bg-green-500 text-white
@@ -123,13 +123,6 @@
                                     <td class="px-2 py-3 uppercase text-center">
                                         <a href="{{ route('Pemesanan.show', $order->id) }}"
                                             class="inline-flex items-center gap-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-xs font-semibold px-3 py-2 rounded-lg transition">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M2.25 12s3.75-7.5 9.75-7.5 9.75 7.5 9.75 7.5-3.75 7.5-9.75 7.5S2.25 12 2.25 12z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" />
-                                            </svg>
                                             Details
                                         </a>
                                     </td>

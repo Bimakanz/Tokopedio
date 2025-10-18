@@ -68,63 +68,57 @@ class PemesananController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:Pending,Processed,Canceled,Confirmed,Sending'
+            'status' => 'required|in:Pending,Processed,Confirmed,Sending,Canceled'
         ]);
 
         $order = Order::with('produk')->findOrFail($id);
-        $previousStatus = $order->status;
+        $user = Auth::user();
 
-        // Status yang memerlukan pengurangan stok: Processed, Sending, Confirmed
-        $stockReducingStatuses = ['Processed', 'Sending', 'Confirmed'];
-        
-        // Jika status sebelumnya adalah Pending dan sekarang berubah ke status yang perlu pengurangan stok
-        if ($previousStatus === 'Pending' && in_array($request->status, $stockReducingStatuses)) {
-            // Kurangi stok produk
-            $order->produk->stok -= $order->jumlah;
-            $order->produk->save();
-        }
-        // Jika status sebelumnya termasuk yang memerlukan pengurangan stok dan sekarang menjadi Pending
-        elseif (in_array($previousStatus, $stockReducingStatuses) && $request->status === 'Pending') {
-            // Kembalikan stok produk
-            $order->produk->stok += $order->jumlah;
-            $order->produk->save();
-        }
-        // Jika status sebelumnya termasuk yang memerlukan pengurangan stok dan sekarang menjadi Canceled
-        elseif (in_array($previousStatus, $stockReducingStatuses) && $request->status === 'Canceled') {
-            // Kembalikan stok produk
-            $order->produk->stok += $order->jumlah;
-            $order->produk->save();
-        }
-        // Jika status sebelumnya adalah Canceled dan sekarang berubah ke status yang perlu pengurangan stok
-        elseif ($previousStatus === 'Canceled' && in_array($request->status, $stockReducingStatuses)) {
-            // Kurangi stok produk
-            $order->produk->stok -= $order->jumlah;
-            $order->produk->save();
-        }
-        // Jika status sebelumnya adalah Pending dan sekarang menjadi Canceled (tidak ada perubahan stok karena tidak dikurangi dari awal)
-        elseif ($previousStatus === 'Pending' && $request->status === 'Canceled') {
-            // Tidak perlu mengurangi stok karena sebelumnya juga tidak dikurangi
-        }
-        // Jika status sebelumnya adalah Canceled dan sekarang kembali ke Pending (tidak ada perubahan stok)
-        elseif ($previousStatus === 'Canceled' && $request->status === 'Pending') {
-            // Tidak ada perubahan stok
+        if (!$user || $user->role !== 'Seller') {
+            abort(403, 'Hanya penjual yang bisa mengubah status pesanan.');
         }
 
-        $order->status = $request->status;
-        $order->save();
+        $prevStatus = $order->status;
+        $newStatus = $request->status;
+        $produk = $order->produk;
+        $jumlah = $order->jumlah;
 
-        // Pesan notifikasi berdasarkan status
-        $statusMessages = [
-            'Pending' => 'Status pesanan diubah menjadi Pending.',
-            'Processed' => 'Status pesanan diubah menjadi Processed. Stok produk telah dikurangi.',
-            'Sending' => 'Status pesanan diubah menjadi Sending. Produk sedang dikirim.',
-            'Confirmed' => 'Status pesanan diubah menjadi Confirmed. Pesanan selesai.',
-            'Canceled' => 'Status pesanan diubah menjadi Canceled. Stok produk telah dikembalikan.'
+        $reduceStatuses = ['Processed', 'Confirmed', 'Sending'];
+
+        // Kalau status berubah ke "Canceled", stok dikembalikan sebanyak jumlah yang dibeli
+        if ($newStatus === 'Canceled') {
+            // Cuma balikin stok kalau stok sebelumnya memang sudah dikurangi
+            if (in_array($prevStatus, $reduceStatuses)) {
+                $produk->increment('stok', $jumlah);
+            }
+        }
+        // Kalau dari Canceled ke status pengurang stok → kurangi stok lagi
+        elseif ($prevStatus === 'Canceled' && in_array($newStatus, $reduceStatuses)) {
+            if ($produk->stok < $jumlah) {
+                return back()->with('error', 'Stok produk tidak mencukupi.');
+            }
+            $produk->decrement('stok', $jumlah);
+        }
+
+        // Kalau dari status pengurang stok ke Pending → balikin stok
+        elseif (in_array($prevStatus, $reduceStatuses) && $newStatus === 'Pending') {
+            $produk->increment('stok', $jumlah);
+        }
+
+        $order->update(['status' => $newStatus]);
+
+        $messages = [
+            'Pending' => 'Status diubah ke Pending.',
+            'Processed' => 'Pesanan diproses dan stok dikurangi.',
+            'Sending' => 'Pesanan sedang dikirim.',
+            'Confirmed' => 'Pesanan dikonfirmasi selesai.',
+            'Canceled' => 'Pesanan dibatalkan dan stok dikembalikan.'
         ];
 
-        $message = $statusMessages[$request->status] ?? 'Status berhasil diperbarui!';
-        return redirect()->back()->with('success', $message);
+        return back()->with('success', $messages[$newStatus] ?? 'Status diperbarui.');
     }
+
+
 
     /**
      * Remove the specified resource from storage.

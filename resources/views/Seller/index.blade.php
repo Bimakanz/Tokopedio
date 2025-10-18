@@ -87,16 +87,23 @@
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-center whitespace-nowrap">
-                                        <span class="px-4 uppercase inline-flex text-xs leading-5 font-bold rounded-full
+                                        <span class="px-3 py-1.5 uppercase inline-flex text-xs leading-5 font-bold rounded-lg
                                                 @if($p['status'] === 'Aktif') bg-green-500 text-white
                                                 @else bg-red-500 text-white
                                                 @endif">
                                             {{ $p['status'] }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 text-center whitespace-nowrap">
+                                    <td class="px-2 py-3 uppercase text-center">
                                         <a href="{{ route('produk.show', $p->id) }}"
-                                            class="inline-flex justify-center items-center px-4 py-2 rounded-lg text-white text-center bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition">
+                                            class="inline-flex items-center gap-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-xs font-semibold px-3 py-2 rounded-lg transition">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M2.25 12s3.75-7.5 9.75-7.5 9.75 7.5 9.75 7.5-3.75 7.5-9.75 7.5S2.25 12 2.25 12z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" />
+                                            </svg>
                                             Details
                                         </a>
                                     </td>

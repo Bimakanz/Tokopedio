@@ -83,7 +83,7 @@
                         <div class="space-y-6">
                             <div>
                                 <label class="block mb-2 text-gray-300 font-semibold" for="gambar">Gambar Produk</label>
-                                <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-600 rounded-2xl bg-gray-900/50 p-6 transition duration-200 hover:bg-gray-900/70">
+                                <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-600 rounded-2xl bg-gray-900/50 p-6 transition duration-200 hover:bg-gray-900/70" id="dropArea">
                                     <input type="file" name="gambar" id="gambar" class="hidden" accept="image/*" />
                                     <div class="text-center">
                                         <div class="mx-auto bg-gray-800 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-3">
@@ -93,9 +93,6 @@
                                         </div>
                                         <p class="text-gray-400 mb-2">Klik untuk memilih gambar</p>
                                         <p class="text-gray-500 text-sm">Format: JPG, PNG, maks 2MB</p>
-                                        <button type="button" id="uploadButton" class="mt-4 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition duration-200 text-sm">
-                                            Pilih Gambar
-                                        </button>
                                     </div>
                                     
                                     <!-- Preview area -->
@@ -135,7 +132,9 @@
                     </div>
                     
                     <div class="mt-10 flex justify-center space-x-4">
-                        
+                        <a href="{{ route('produk.index') }}" class="px-6 py-3 rounded-lg bg-gray-700 text-white font-medium shadow hover:bg-gray-600 transition-all duration-200">
+                            Batal
+                        </a>
                         <button type="submit" class="px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-lg shadow-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
                             <span class="flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -153,13 +152,13 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const fileInput = document.getElementById('gambar');
-                const uploadButton = document.getElementById('uploadButton');
+                const dropArea = document.getElementById('dropArea');
                 const imagePreview = document.getElementById('imagePreview');
                 const previewImage = document.getElementById('previewImage');
                 const removeImageButton = document.getElementById('removeImage');
                 
-                // Tampilkan file dialog saat tombol upload diklik
-                uploadButton.addEventListener('click', function() {
+                // Tampilkan file dialog saat area drop diklik
+                dropArea.addEventListener('click', function() {
                     fileInput.click();
                 });
                 
@@ -179,18 +178,16 @@
                     }
                 });
                 
-                // Hapus gambar yang dipilih - ini akan memungkinkan upload gambar baru
+                // Hapus gambar yang dipilih
                 removeImageButton.addEventListener('click', function() {
-                    if (confirm('Apakah Anda yakin ingin menghapus gambar ini? Gambar sebelumnya akan tetap tersimpan kecuali Anda mengganti dengan gambar baru.')) {
+                    if (confirm('Apakah Anda yakin ingin menghapus gambar ini?')) {
                         fileInput.value = '';
                         previewImage.style.display = 'none';
                         imagePreview.classList.add('hidden');
                     }
                 });
                 
-                // Juga tampilkan preview saat drag & drop
-                const dropArea = document.querySelector('.border-dashed');
-                
+                // Drag & drop functionality
                 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                     dropArea.addEventListener(eventName, preventDefaults, false);
                 });
