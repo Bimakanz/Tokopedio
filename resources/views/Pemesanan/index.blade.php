@@ -69,9 +69,6 @@
                                     Status</th>
                                 <th scope="col"
                                     class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Aksi</th>
-                                <th scope="col"
-                                    class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
                                     Detail</th>
                             </tr>
                         </thead>
@@ -122,32 +119,6 @@
                                                 @endif">
                                             {{ $order->status }}
                                         </span>
-                                    </td>
-                                    <td class="px-4 py-4 text-center whitespace-nowrap text-sm">
-                                        @if(auth()->user()->role === 'Seller')
-                                            <form action="{{ route('Pemesanan.updateStatus', $order->id) }}" method="POST"
-                                                class="inline">
-                                                @csrf
-                                                @method('PUT')
-                                                <select name="status"
-                                                    class="text-left uppercase rounded-lg bg-gray-700 border-gray-600 text-gray-200 text-xs p-2">
-                                                    <option value="Pending" {{ $order->status == 'Pending' ? 'selected' : '' }}>
-                                                        Pending</option>
-                                                    <option value="Processed" {{ $order->status == 'Processed' ? 'selected' : '' }}>
-                                                        Processed</option>
-                                                    <option value="Sending" {{ $order->status == 'Sending' ? 'selected' : '' }}>
-                                                        Sending</option>
-                                                    <option value="Canceled" {{ $order->status == 'Canceled' ? 'selected' : '' }}>
-                                                        Canceled</option>
-                                                    <option value="Confirmed" {{ $order->status == 'Confirmed' ? 'selected' : '' }}>
-                                                        Confirmed</option>
-                                                </select>
-                                                <button type="submit"
-                                                    class="ml-1 uppercase bg-indigo-600 text-white p-2 rounded text-xs hover:bg-indigo-700">
-                                                    Ubah
-                                                </button>
-                                            </form>
-                                        @endif
                                     </td>
                                     <td class="px-2 py-3 uppercase text-center">
                                         <a href="{{ route('Pemesanan.show', $order->id) }}"

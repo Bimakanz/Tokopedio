@@ -22,6 +22,16 @@
 
         <!-- TABLE PRODUK -->
         <section class=" mt-10">
+            <!-- Notification Toast -->
+            <div id="notification-toast" class="mb-4 transform transition-all duration-300 translate-y-20 opacity-0 z-50">
+                <div class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-4 rounded-lg shadow-lg flex items-center space-x-3 max-w-sm mx-auto">
+                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span id="notification-message" class="font-medium"></span>
+                </div>
+            </div>
+            
             <div class=" max-w-screen-full mx-2">
                 <!-- Start coding here -->
                 <div class="bg-gradient-to-br from-gray-800 to-gray-900 relative shadow-xl sm:rounded-2xl overflow-hidden border border-gray-700">
@@ -138,4 +148,30 @@
             </div>
         </section>
     </div>
+    <script>
+            // Show notification function
+            function showNotification(message) {
+                const toast = document.getElementById('notification-toast');
+                const messageElement = document.getElementById('notification-message');
+                
+                messageElement.textContent = message;
+                
+                // Remove hidden class and add animation classes
+                toast.classList.remove('translate-y-20', 'opacity-0');
+                toast.classList.add('translate-y-0', 'opacity-100');
+                
+                // Hide after 3 seconds
+                setTimeout(() => {
+                    toast.classList.remove('translate-y-0', 'opacity-100');
+                    toast.classList.add('translate-y-20', 'opacity-0');
+                }, 3000);
+            }
+            
+            // Check for success message from session and show notification
+            @if(session('success'))
+                document.addEventListener('DOMContentLoaded', function() {
+                    showNotification('{{ session('success') }}');
+                });
+            @endif
+        </script>
 </x-app-layout>

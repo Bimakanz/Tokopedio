@@ -43,9 +43,9 @@
                                     </span>
                                 </div>
                                 
-                                <div class="flex flex-col">
+                                <div class="flex text-wrap flex-col">
                                     <span class="text-gray-400 font-medium">Alamat</span>
-                                    <span class="text-gray-200 font-medium mt-1">
+                                    <span class="text-gray-200 font-medium mt-1 break-words whitespace-normal">
                                         {{ $orders->alamat }}
                                     </span>
                                 </div>

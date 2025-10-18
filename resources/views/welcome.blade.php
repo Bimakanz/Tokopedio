@@ -98,19 +98,19 @@
                     <div class="bg-gradient-to-r from-gray-700 to-gray-800 p-8 border-t border-gray-700">
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                             <div class="text-center">
-                                <div class="text-3xl font-bold text-indigo-400">1000+</div>
+                                <div class="text-3xl font-bold text-indigo-400">5+</div>
                                 <div class="text-gray-400 mt-1">Produk Tersedia</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-3xl font-bold text-indigo-400">500+</div>
+                                <div class="text-3xl font-bold text-indigo-400">2+</div>
                                 <div class="text-gray-400 mt-1">Pelanggan</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-3xl font-bold text-indigo-400">24/7</div>
+                                <div class="text-3xl font-bold text-indigo-400">24/2</div>
                                 <div class="text-gray-400 mt-1">Layanan</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-3xl font-bold text-indigo-400">99%</div>
+                                <div class="text-3xl font-bold text-indigo-400">10%</div>
                                 <div class="text-gray-400 mt-1">Puas</div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
         </div>
 
         <footer class="py-6 text-center text-gray-500 text-sm">
-            <p>© {{ date('Y') }} {{ config('app.name', 'Tokopedio') }}.</p>
+            <p>© 2025 {{ __('Tokopedio') }}.</p>
         </footer>
     </body>
 </html>

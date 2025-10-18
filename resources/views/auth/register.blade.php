@@ -1,6 +1,6 @@
 <x-guest-layout>
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 p-4">
-        <div class="w-full max-w-2xl">
+    <div class=" flex mt-10 items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 p-4">
+        <div class="w-full mt-6 max-w-xl">
             <div class="bg-gradient-to-br from-gray-800 to-gray-900 shadow-2xl rounded-2xl p-8 border border-gray-700">
                 <div class="text-center mb-10">
                     <h2 class="text-4xl font-bold text-white mb-3">Buat Akun Baru</h2>
@@ -34,50 +34,50 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                             <!-- Pengguna -->
-                            <label class="flex flex-col items-center p-6 border-2 rounded-2xl shadow-lg cursor-pointer 
-                                        hover:border-indigo-400 transition-all duration-300
-                                        dark:border-gray-700 bg-gray-700 hover:bg-gray-600 relative group {{ old('role') == 'Buyer' ? 'border-indigo-500 ring-4 ring-indigo-500/30 bg-indigo-900/20' : '' }}">
+                            <label class="role-option {{ old('role') == 'Buyer' ? 'border-2 border-purple-500 bg-gray-700' : 'border-2 border-gray-600' }} flex flex-col items-center p-6 rounded-2xl shadow-lg cursor-pointer 
+                                        hover:border-purple-400 transition-all duration-300
+                                        bg-gray-800 relative group">
                                 <!-- Radio button -->
                                 <input type="radio" name="role" value="Buyer"
-                                    class="absolute top-4 right-4 h-5 w-5 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                    class="sr-only role-radio"
                                     {{ old('role') == 'Buyer' ? 'checked' : '' }} required>
 
                                 <!-- Icon -->
                                 <div class="mb-4">
-                                    <svg class="w-14 h-14 text-indigo-400 group-hover:text-indigo-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="w-14 h-14 {{ old('role') == 'Buyer' ? 'text-purple-400' : 'text-gray-400' }} group-hover:text-purple-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
                                 </div>
 
                                 <!-- Isi card -->
                                 <div class="text-center">
-                                    <h3 class="text-xl font-bold text-white group-hover:text-indigo-200 transition-colors duration-300">Pengguna</h3>
-                                    <p class="mt-3 text-gray-400 group-hover:text-indigo-300 transition-colors duration-300">
+                                    <h3 class="text-xl font-bold {{ old('role') == 'Buyer' ? 'text-purple-300' : 'text-white' }} group-hover:text-purple-200 transition-colors duration-300">Pengguna</h3>
+                                    <p class="mt-3 {{ old('role') == 'Buyer' ? 'text-purple-200' : 'text-gray-400' }} group-hover:text-purple-300 transition-colors duration-300">
                                         Beli produk yang Anda butuhkan
                                     </p>
                                 </div>
                             </label>
 
                             <!-- Penjual -->
-                            <label class="flex flex-col items-center p-6 border-2 rounded-2xl shadow-lg cursor-pointer 
-                                        hover:border-indigo-400 transition-all duration-300
-                                        dark:border-gray-700 bg-gray-700 hover:bg-gray-600 relative group {{ old('role') == 'Seller' ? 'border-indigo-500 ring-4 ring-indigo-500/30 bg-indigo-900/20' : '' }}">
+                            <label class="role-option {{ old('role') == 'Seller' ? 'border-2 border-purple-500 bg-gray-700' : 'border-2 border-gray-600' }} flex flex-col items-center p-6 rounded-2xl shadow-lg cursor-pointer 
+                                        hover:border-purple-400 transition-all duration-300
+                                        bg-gray-800 relative group">
                                 <!-- Radio button -->
                                 <input type="radio" name="role" value="Seller"
-                                    class="absolute top-4 right-4 h-5 w-5 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                    class="sr-only role-radio"
                                     {{ old('role') == 'Seller' ? 'checked' : '' }}>
 
                                 <!-- Icon -->
                                 <div class="mb-4">
-                                    <svg class="w-14 h-14 text-indigo-400 group-hover:text-indigo-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="w-14 h-14 {{ old('role') == 'Seller' ? 'text-purple-400' : 'text-gray-400' }} group-hover:text-purple-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                     </svg>
                                 </div>
 
                                 <!-- Isi card -->
                                 <div class="text-center">
-                                    <h3 class="text-xl font-bold text-white group-hover:text-indigo-200 transition-colors duration-300">Penjual</h3>
-                                    <p class="mt-3 text-gray-400 group-hover:text-indigo-300 transition-colors duration-300">
+                                    <h3 class="text-xl font-bold {{ old('role') == 'Seller' ? 'text-purple-300' : 'text-white' }} group-hover:text-purple-200 transition-colors duration-300">Penjual</h3>
+                                    <p class="mt-3 {{ old('role') == 'Seller' ? 'text-purple-200' : 'text-gray-400' }} group-hover:text-purple-300 transition-colors duration-300">
                                         Jual produk Anda kepada pelanggan
                                     </p>
                                 </div>
@@ -126,5 +126,60 @@
                 </div>
             </div>
         </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const roleRadios = document.querySelectorAll('.role-radio');
+                
+                roleRadios.forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        // Remove selected classes from all options
+                        document.querySelectorAll('.role-option').forEach(option => {
+                            option.classList.remove('border-purple-500', 'bg-gray-700');
+                            option.classList.add('border-gray-600');
+                            
+                            // Update text colors to default
+                            const icons = option.querySelectorAll('svg');
+                            const texts = option.querySelectorAll('h3, p');
+                            
+                            icons.forEach(icon => {
+                                icon.classList.remove('text-purple-400');
+                                icon.classList.add('text-gray-400');
+                            });
+                            
+                            texts[0].classList.remove('text-purple-300');
+                            texts[0].classList.add('text-white');
+                            
+                            if (texts.length > 1) {
+                                texts[1].classList.remove('text-purple-200');
+                                texts[1].classList.add('text-gray-400');
+                            }
+                        });
+                        
+                        // Add selected classes to the checked option
+                        const selectedLabel = this.closest('.role-option');
+                        selectedLabel.classList.remove('border-gray-600');
+                        selectedLabel.classList.add('border-purple-500', 'bg-gray-700');
+                        
+                        // Update text colors for selected option
+                        const selectedIcons = selectedLabel.querySelectorAll('svg');
+                        const selectedTexts = selectedLabel.querySelectorAll('h3, p');
+                        
+                        selectedIcons.forEach(icon => {
+                            icon.classList.remove('text-gray-400');
+                            icon.classList.add('text-purple-400');
+                        });
+                        
+                        selectedTexts[0].classList.remove('text-white');
+                        selectedTexts[0].classList.add('text-purple-300');
+                        
+                        if (selectedTexts.length > 1) {
+                            selectedTexts[1].classList.remove('text-gray-400');
+                            selectedTexts[1].classList.add('text-purple-200');
+                        }
+                    });
+                });
+            });
+        </script>
     </div>
 </x-guest-layout>
