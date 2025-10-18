@@ -59,22 +59,10 @@
                         </p>
 
                         <!-- Tombol Beli -->
-                        @if(Auth::user()->role === 'Buyer')
-                        <a href="{{ route('User.create', $p->id) }}"
-                            class="block shadow-lg text-center bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl py-3 transition transform hover:scale-105">
-                            🔥 Beli Sekarang
-                        </a>
-                        @elseif(Auth::user()->role === 'Seller' && $p->user_id == Auth::id())
-                        <a href="{{ route('Seller/produk.edit', $p->id) }}"
-                            class="block shadow-lg text-center bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold rounded-xl py-3 transition transform hover:scale-105">
-                            ✏️ Edit Produk
-                        </a>
-                        @else
                         <a href="{{ route('User.create', $p->id) }}"
                             class="block shadow-lg text-center bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl py-3 transition transform hover:scale-105">
                             🔥 Beli Produk
                         </a>
-                        @endif
                     </div>
                 </div>
                 @endif

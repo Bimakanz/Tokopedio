@@ -16,7 +16,7 @@
                 </p>
                 <img src="{{ asset('storage/' . $produk->gambar) }}" 
                      alt="{{ $produk->nama }}" 
-                     class="w-full h-56 object-contain rounded-lg mt-3">
+                     class="w-full h-56 rounded-full object-contain rounded-lg mt-3">
             </div>
 
             <!-- Form -->
@@ -55,7 +55,7 @@
                 <div>
                     <label class="block text-white font-semibold text-gray-700 mb-1">Jumlah Barang</label>
                     <input type="text" name="jumlah" id="jumlah" min="1" max="{{ $produk->stok }}" value="1"
-                        class="w-full p-2 bg-gray-800 text-white border border-gray-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        class="w-full p-2 px-4 bg-gray-800 text-white border border-gray-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                     @error('jumlah')
                         <p class="text-red-500 p-2 text-sm mt-1">{{ $message }}</p>
                     @enderror

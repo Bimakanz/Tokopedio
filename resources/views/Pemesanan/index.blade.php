@@ -18,7 +18,7 @@
             </div>
         @endif
         
-        <div class="p-10 rounded-2xl shadow-xl mt-5 border border-gray-700 bg-gradient-to-br from-gray-800 to-gray-900">
+        <div class="p-10 rounded-2xl shadow-xl border border-gray-700 bg-gradient-to-br from-gray-800 to-gray-900">
             <div class="flex flex-row justify-between">
                 <div class="text-white">
                     <h1 class="font-bold text-3xl text-white bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
