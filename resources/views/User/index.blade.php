@@ -6,15 +6,17 @@
     </x-slot>
 
     <!-- Bagian sambutan -->
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden shadow-xl sm:rounded-2xl border border-gray-700">
-                <div class="p-6 text-gray-200">
-                    Ini adalah halaman Pesanan , {{ Auth::user()->name }} !
+    <div class="p-10 rounded-2xl shadow-xl m-10  border border-gray-700 bg-gradient-to-br from-gray-800 to-gray-900">
+            <div class=" flex-row justify-between">
+                <div class="text-white text-center">
+                    <h1 class="font-bold text-3xl text-white bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
+                        Kelola Pesanan Anda, {{ Auth::user()->name }}!</h1>
+                    <p class="text-center text-2xl text-gray-300 mt-2">
+                        Kelola Pesanan Anda dengan mudah di sini.</p>
                 </div>
             </div>
         </div>
-    </div>
+    
 
     <!-- Bagian Tabel Pesanan -->
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-12">

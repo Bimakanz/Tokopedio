@@ -3,10 +3,10 @@
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-10">
                 <h1 class="text-4xl font-extrabold text-white mb-3 tracking-tight animate-fadeIn">Detail Produk</h1>
-                <p class="text-gray-400 max-w-md mx-auto">Informasi lengkap tentang produk Anda</p>
+                <p class="text-gray-400 max-w-md mx-auto animate-fadeIn">Informasi lengkap tentang produk Anda</p>
             </div>
             
-            <div class="flex justify-end mb-6">
+            <div class="flex justify-end mb-6 animate-fadeIn">
                 <div class="flex space-x-3">
                     <a href="{{ route('produk.edit', $produk->id) }}" class="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium shadow hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 flex items-center transform hover:scale-105 animate-pulseScale">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -28,7 +28,7 @@
                 </div>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fadeOut">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fadeIn">
                 <!-- Bagian gambar produk -->
                 <div class="bg-gray-800/70 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 p-8 flex flex-col justify-center items-center">
                     @if($produk->gambar)
@@ -48,7 +48,7 @@
                 </div>
                 
                 <!-- Bagian informasi produk -->
-                <div class="space-y-8">
+                <div class="space-y-8 animate-fadeIn">
                     <!-- Informasi dasar -->
                     <div class="bg-gray-800/70 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 p-8 transform transition duration-500 hover:scale-[1.01]">
                         <h2 class="text-3xl font-bold text-white mb-4">{{ $produk->nama }}</h2>

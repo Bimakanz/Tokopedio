@@ -1,9 +1,9 @@
 <x-app-layout>
-    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-10">
-                <h1 class="text-4xl font-extrabold text-white mb-3 tracking-tight">Formulir Pembelian</h1>
-                <p class="text-gray-400 max-w-md mx-auto">Lengkapi informasi pembelian Anda untuk menyelesaikan transaksi</p>
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 animate-fadeIn">
+        <div class="max-w-6xl mx-auto animate-fadeIn">
+            <div class="text-center mb-10 animate-fadeIn">
+                <h1 class="text-4xl font-extrabold text-white mb-3 tracking-tight animate-fadeIn">Formulir Pembelian</h1>
+                <p class="text-gray-400 max-w-md mx-auto animate-fadeIn">Lengkapi informasi pembelian Anda untuk menyelesaikan transaksi</p>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fadeIn">

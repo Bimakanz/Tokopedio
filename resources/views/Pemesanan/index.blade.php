@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-200 leading-tight">
-            {{ __('Daftar pesanan mu, ') . Auth::user()->name . ' !' }}
+            {{ __('Daftar pesanan pembeli, ') . Auth::user()->name . ' !' }}
         </h2>
     </x-slot>
     <div class="p-8">
@@ -22,9 +22,9 @@
             <div class="flex flex-row justify-between">
                 <div class="text-white">
                     <h1 class="font-bold text-3xl text-white bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
-                        Kelola Produk</h1>
+                        Kelola Pesanan Pembeli</h1>
                     <p class="text-center text-2xl text-gray-300 mt-2">
-                        Kelola produk Anda dengan mudah di sini.</p>
+                        Kelola pesanan pembeli dengan mudah di sini.</p>
                 </div>
             </div>
         </div>
@@ -60,15 +60,6 @@
                                     Total Harga</th>
                                 <th scope="col"
                                     class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Kurir</th>
-                                <th scope="col"
-                                    class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Metode</th>
-                                <th scope="col"
-                                    class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Status</th>
-                                <th scope="col"
-                                    class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
                                     Detail</th>
                             </tr>
                         </thead>
@@ -91,34 +82,6 @@
                                         <div class="text-sm font-semibold text-green-400">
                                             Rp {{ number_format((int) $order->total_harga, 0, ',', '.') }}
                                         </div>
-                                    </td>
-                                    <td class="px-5 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-2 inline-flex text-xs leading-5 font-semibold rounded-lg
-                                                @if($order->kurir == 'JNE') bg-yellow-500 text-white
-                                                @elseif($order->kurir == 'JNT') bg-indigo-500 text-white
-                                                @else bg-blue-500 text-white
-                                                @endif">
-                                            {{ $order->kurir }}
-                                        </span>
-                                    </td>
-                                    <td class="px-4 py-4 text-center whitespace-nowrap">
-                                        <span class="px-2 py-2 inline-flex text-xs leading-5 font-semibold rounded-lg
-                                                @if($order->metode == 'COD') bg-yellow-500 text-white
-                                                @else bg-purple-500 text-white
-                                                @endif">
-                                            {{ $order->metode }}
-                                        </span>
-                                    </td>
-                                    <td class="px-4 py-4 text-center whitespace-nowrap">
-                                        <span class="px-3 py-2 uppercase inline-flex text-xs leading-5 font-semibold rounded-lg
-                                                @if($order->status == 'Pending') bg-yellow-500 text-white
-                                                @elseif($order->status == 'Processed') bg-indigo-500 text-white
-                                                @elseif($order->status == 'Confirmed') bg-green-500 text-white
-                                                @elseif($order->status == 'Sending') bg-orange-500 text-white
-                                                @else bg-red-500 text-white
-                                                @endif">
-                                            {{ $order->status }}
-                                        </span>
                                     </td>
                                     <td class="px-2 py-3 uppercase text-center">
                                         <a href="{{ route('Pemesanan.show', $order->id) }}"
