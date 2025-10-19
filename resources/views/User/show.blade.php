@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 animate-fadeIn">
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 animate-fadeIn pt-[150px]">
         <div class="max-w-6xl mx-auto animate-fadeIn">
             <div class="text-center mb-10 animate-fadeIn">
                 <h1 class="text-4xl font-extrabold text-white mb-3 tracking-tight">Detail Pesanan Anda</h1>

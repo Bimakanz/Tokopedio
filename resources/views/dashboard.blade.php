@@ -1,12 +1,6 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="pt-[150px] pb-8 animate-fadeIn">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
             <div class="bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden shadow-xl sm:rounded-2xl border border-gray-700">
                 <div class="p-8 text-center">
                     <h1 class="text-3xl font-bold text-white mb-2">
@@ -20,8 +14,8 @@
         </div>
     </div>
     
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="max-w-7xl animate-fadeIn mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($produk as $p)
                 @if ($p->status === 'Aktif')
                 <div class="group relative bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl overflow-hidden flex flex-col shadow-xl border border-gray-700 transition-all duration-500 hover:shadow-2xl hover:shadow-indigo-500/20 hover:border-indigo-500/50 hover:-translate-y-2">
@@ -76,7 +70,7 @@
                         </div>
 
                         <!-- Tombol Beli -->
-                        <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
+                        <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0 transition">
                             <a href="{{ route('User.create', $p->id) }}"
                                 class="block text-center bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl py-4 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                                 <span class="flex items-center justify-center">

@@ -1,11 +1,5 @@
 <x-app-layout>
-
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-200 leading-tight">
-            {{ __('Daftar pesanan pembeli, ') . Auth::user()->name . ' !' }}
-        </h2>
-    </x-slot>
-    <div class="p-8">
+    <div class="pt-[150px] pb-[50px] p-6 animate-fadeIn">
         <!-- Notifikasi keberhasilan -->
         @if(session('success'))
             <div class="mb-6">
@@ -17,7 +11,7 @@
                 </div>
             </div>
         @endif
-        
+
         <div class="p-10 rounded-2xl shadow-xl border border-gray-700 bg-gradient-to-br from-gray-800 to-gray-900">
             <div class="flex flex-row justify-between">
                 <div class="text-white">
@@ -30,11 +24,11 @@
         </div>
 
     </div>
-    <section class="">
-    <div class="max-w-screen-full mx-12">
-        <div class="bg-gradient-to-br from-gray-800 to-gray-900 shadow-xl rounded-2xl p-8 border border-gray-700">
+    <section class="animate-fadeIn -mt-6">
+    <div class="max-w-screen-full mx-6">
+        <div class="bg-gradient-to-br from-gray-800 to-gray-900 shadow-xl rounded-2xl p-6 border border-gray-700">
             <h1
-                class="text-center text-3xl font-extrabold mb-8 text-white bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
+                class="text-center text-3xl font-extrabold mb-6 text-white bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
                 Daftar Pesanan
             </h1>
 
@@ -51,13 +45,19 @@
                                     Produk</th>
                                 <th scope="col"
                                     class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                    Nama Pemesan</th>
-                                <th scope="col"
-                                    class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
                                     Jumlah</th>
                                 <th scope="col"
                                     class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
                                     Total Harga</th>
+                                <th scope="col"
+                                    class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Metode</th>
+                                <th scope="col"
+                                    class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Kurir</th>
+                                <th scope="col"
+                                    class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Status</th>
                                 <th scope="col"
                                     class="px-4 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
                                     Detail</th>
@@ -73,15 +73,52 @@
                                         <div class="text-sm font-medium text-gray-200">{{ $order->produk->nama ?? '-' }}</div>
                                     </td>
                                     <td class="px-4 py-4 text-center whitespace-nowrap">
-                                        <div class="text-sm text-gray-200">{{ $order->nama_pemesan }}</div>
-                                    </td>
-                                    <td class="px-4 py-4 text-center whitespace-nowrap">
                                         <div class="text-sm text-gray-200">{{ $order->jumlah }}</div>
                                     </td>
                                     <td class="px-4 py-4 text-center whitespace-nowrap">
                                         <div class="text-sm font-semibold text-green-400">
                                             Rp {{ number_format((int) $order->total_harga, 0, ',', '.') }}
                                         </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-center whitespace-nowrap">
+                                        @php
+                                            $metodeColors = [
+                                                'COD' => 'bg-yellow-900/30 text-yellow-400',
+                                                'TRANSFER' => 'bg-purple-900/30 text-purple-400',
+                                            ];
+                                            $metodeClass = $metodeColors[$order->metode] ?? 'bg-gray-700 text-gray-300';
+                                        @endphp
+                                        <span class="px-3 py-1.5 uppercase inline-flex text-xs leading-5 font-bold rounded-lg {{ $metodeClass }}">
+                                            {{ $order->metode }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 text-center whitespace-nowrap">
+                                        @php
+                                            $kurirColors = [
+                                                'JNE' => 'bg-yellow-900/30 text-yellow-400',
+                                                'JNT' => 'bg-indigo-900/30 text-indigo-400',
+                                                'POS' => 'bg-blue-900/30 text-blue-400',
+                                            ];
+                                            $kurirClass = $kurirColors[$order->kurir] ?? 'bg-gray-700 text-gray-300';
+                                        @endphp
+                                        <span class="px-3 py-1.5 uppercase inline-flex text-xs leading-5 font-bold rounded-lg {{ $kurirClass }}">
+                                            {{ $order->kurir }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 text-center whitespace-nowrap">
+                                        @php
+                                            $statusColors = [
+                                                'Pending' => 'bg-yellow-900/30 text-yellow-400',
+                                                'Processed' => 'bg-blue-900/30 text-blue-400',
+                                                'Sending' => 'bg-orange-900/30 text-orange-400',
+                                                'Confirmed' => 'bg-green-900/30 text-green-400',
+                                                'Canceled' => 'bg-red-900/30 text-red-400',
+                                            ];
+                                            $statusClass = $statusColors[$order->status] ?? 'bg-gray-700 text-gray-300';
+                                        @endphp
+                                        <span class="px-3 py-1.5 uppercase inline-flex text-xs leading-5 font-bold rounded-lg {{ $statusClass }}">
+                                            {{ $order->status }}
+                                        </span>
                                     </td>
                                     <td class="px-2 py-3 uppercase text-center">
                                         <a href="{{ route('Pemesanan.show', $order->id) }}"

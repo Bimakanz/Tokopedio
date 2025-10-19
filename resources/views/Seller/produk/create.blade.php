@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6">
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 animate-fadeIn pt-[150px]">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-10">
                 <h1 class="text-4xl font-extrabold text-white mb-3 tracking-tight">Tambah Produk Baru</h1>

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6">
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 pt-[150px] animate-fadeIn">
         <div class="max-w-6xl mx-auto">
             <!-- Notifikasi keberhasilan -->
             @if(session('success'))
@@ -141,31 +141,42 @@
                                     method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <div class="flex flex-col sm:flex-row gap-3">
-                                        <select name="status"
-                                            class="flex-1 bg-gray-700 text-white rounded-xl border border-gray-600 py-3 px-4 focus:ring-2 focus:ring-purple-600 focus:border-transparent focus:outline-none transition duration-200">
-                                            <option value="Pending" {{ $order->status == 'Pending' ? 'selected' : '' }}>
-                                                Pending</option>
-                                            <option value="Processed" {{ $order->status == 'Processed' ? 'selected' : '' }}>
-                                                Processed</option>
-                                            <option value="Sending" {{ $order->status == 'Sending' ? 'selected' : '' }}>
-                                                Sending</option>
-                                            <option value="Confirmed" {{ $order->status == 'Confirmed' ? 'selected' : '' }}>
-                                                Confirmed</option>
-                                            <option value="Canceled" {{ $order->status == 'Canceled' ? 'selected' : '' }}>
-                                                Canceled</option>
-                                        </select>
-                                        <button type="submit" id="updateButton"
-                                            class="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium shadow-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105">
-                                            Perbarui
-                                        </button>
-                                        <div class="mt-3 text-center">
+                                    
+                                    <!-- Status selection buttons -->
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+                                        @php
+                                            $statusOptions = [
+                                                'Pending' => ['bg-yellow-900/30', 'text-yellow-400'],
+                                                'Processed' => ['bg-blue-900/30', 'text-blue-400'],
+                                                'Sending' => ['bg-orange-900/30', 'text-orange-400'],
+                                                'Confirmed' => ['bg-green-900/30', 'text-green-400'],
+                                                'Canceled' => ['bg-red-900/30', 'text-red-400']
+                                            ];
+                                        @endphp
+                                        
+                                        @foreach($statusOptions as $status => $classes)
+                                            <button type="button" 
+                                                onclick="selectStatus(this, '{{ $status }}')"
+                                                class="status-button px-4 py-3 rounded-xl border border-gray-600 text-sm font-medium transition-all duration-200 hover:scale-[1.03] {{ $order->status === $status ? 'bg-gradient-to-r ' . $classes[0] . ' ' . $classes[1] . ' border-2 border-' . ($loop->index == 0 ? 'yellow' : ($loop->index == 1 ? 'blue' : ($loop->index == 2 ? 'orange' : ($loop->index == 3 ? 'green' : 'red'))) . '-500') : 'bg-gray-800 text-gray-400' }}">
+                                                {{ $status }}
+                                            </button>
+                                        @endforeach
+                                    </div>
+                                    
+                                    <input type="hidden" name="status" id="selectedStatusInput" value="{{ $order->status }}">
+                                    
+                                    <div class="flex flex-col sm:flex-row justify-between gap-4 pt-4">
+                                        
+                                        <div class="text-center sm:text-right">
+                                            <button type="submit" id="updateButton" 
+                                                class="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium shadow-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105">
+                                                Perbarui
+                                            </button>
                                             <a href="{{ route('Pemesanan.index') }}"
-                                                class="px-6 py-3 rounded-xl bg-gray-700 text-white font-medium shadow-lg hover:bg-gray-600 transition-all duration-200 transform hover:scale-105">
+                                                class="px-6 py-3 rounded-xl bg-gradient-to-r from-gray-600 to-gray-700 text-white font-medium shadow-lg hover:from-gray-700 hover:to-gray-800 transition-all duration-200 transform hover:scale-105">
                                                 Kembali
                                             </a>
                                         </div>
-                                    </div>
                                 </form>
                             </div>
                         @endif
@@ -175,6 +186,61 @@
         </div>
 
         <script>
+            // Function to handle status selection
+            function selectStatus(element, status) {
+                // Remove selected state from all buttons
+                const buttons = document.querySelectorAll('.status-button');
+                buttons.forEach(btn => {
+                    btn.classList.remove('bg-gradient-to-r', 'text-yellow-400', 'text-blue-400', 'text-orange-400', 'text-green-400', 'text-red-400');
+                    btn.classList.remove('border-2', 'border-yellow-500', 'border-blue-500', 'border-orange-500', 'border-green-500', 'border-red-500');
+                    btn.classList.add('bg-gray-800', 'text-gray-400');
+                });
+                
+                // Add selected state to clicked button
+                element.classList.add('bg-gradient-to-r', 'border-2');
+                
+                // Determine color based on status
+                switch(status) {
+                    case 'Pending':
+                        element.classList.add('from-yellow-900/30', 'to-yellow-700/30', 'text-yellow-400', 'border-yellow-500');
+                        break;
+                    case 'Processed':
+                        element.classList.add('from-blue-900/30', 'to-blue-700/30', 'text-blue-400', 'border-blue-500');
+                        break;
+                    case 'Sending':
+                        element.classList.add('from-orange-900/30', 'to-orange-700/30', 'text-orange-400', 'border-orange-500');
+                        break;
+                    case 'Confirmed':
+                        element.classList.add('from-green-900/30', 'to-green-700/30', 'text-green-400', 'border-green-500');
+                        break;
+                    case 'Canceled':
+                        element.classList.add('from-red-900/30', 'to-red-700/30', 'text-red-400', 'border-red-500');
+                        break;
+                    default:
+                        element.classList.add('from-gray-700', 'to-gray-500', 'text-gray-400', 'border-gray-500');
+                }
+                
+                // Update hidden input with selected status
+                document.getElementById('selectedStatusInput').value = status;
+                
+                // Show confirmation message
+                const confirmationMessage = document.getElementById('confirmationMessage');
+                confirmationMessage.classList.remove('hidden');
+                
+                // Add animation to the message
+                confirmationMessage.classList.add('animate-fadeIn');
+                
+                // Auto-hide the confirmation message after 3 seconds
+                setTimeout(() => {
+                    confirmationMessage.classList.add('opacity-0');
+                    setTimeout(() => {
+                        confirmationMessage.classList.add('hidden');
+                        confirmationMessage.classList.remove('opacity-0');
+                        confirmationMessage.classList.remove('animate-fadeIn');
+                    }, 500);
+                }, 3000);
+            }
+            
             document.addEventListener('DOMContentLoaded', function () {
                 // Status update form handling
                 const statusForm = document.getElementById('statusForm');
