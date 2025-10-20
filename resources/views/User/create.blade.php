@@ -52,7 +52,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <!-- Nama Pembeli -->
                                 <div>
-                                    <label class="block mb-2 text-gray-300 font-semibold" for="nama_pemesan">Nama Lengkap</label>
+                                    <label class="block mb-2 text-gray-300 font-semibold" for="nama_pemesan">Nama Penerima</label>
                                     <input 
                                         type="text" 
                                         name="nama_pemesan" 
@@ -69,7 +69,7 @@
                                 <div>
                                     <label class="block mb-2 text-gray-300 font-semibold" for="jumlah">Jumlah Barang</label>
                                     <input 
-                                        type="number" 
+                                        type="text" 
                                         name="jumlah" 
                                         id="jumlah" 
                                         min="1" 
