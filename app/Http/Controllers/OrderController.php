@@ -11,9 +11,9 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('user_id', Auth::id())->latest()->get();
-        return view('User.index', compact('orders'));
-    }
+            $orders = Order::where('user_id', Auth::id())->latest()->get();
+            return view('User.index', compact('orders'));
+        }
 
     
     public function updateStatus(Request $request, $id)

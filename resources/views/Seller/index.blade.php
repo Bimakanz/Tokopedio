@@ -13,7 +13,7 @@
         @endif
 
         <div class="p-10 animate-fadeIn rounded-2xl shadow-xl border border-gray-700 bg-gradient-to-br from-gray-800 to-gray-900">
-            <div class="flex flex-row justify-between">
+            <d  iv class="flex flex-row justify-between">
                 <div class="text-white">
                     <h1 class="font-bold text-3xl text-white bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
                         Kelola Produk</h1>
@@ -24,13 +24,13 @@
                     class="rounded-xl inline-flex uppercase font-bold justify-center items-center px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center text-xl hover:from-indigo-700 hover:to-purple-700 transition">
                     Tambah Produk
                 </a>
-            </div>
+            </d>
         </div>
 
     </div>
     <section class="animate-fadeIn -mt-6">
     <div class="max-w-screen-full mx-6">
-        <div class="bg-gradient-to-br from-gray-800 to-gray-900 shadow-xl rounded-2xl p-6 border border-gray-700">
+        <div class="bg-gradient-to-br from-gray-800 to-gra  y-900 shadow-xl rounded-2xl p-6 border border-gray-700">
             <h1
                 class="text-center text-3xl font-extrabold mb-6 text-white bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
                 Daftar Produk
@@ -55,7 +55,7 @@
                             @foreach ($produk as $p)
                                 <tr class="hover:bg-gray-750 transition">
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-200">{{ $loop->iteration }}</div>
+                                        <div class="text-xl font-medium text-gray-200">{{ $loop->iteration }}</div>
                                     </td>
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         @if($p['gambar'])

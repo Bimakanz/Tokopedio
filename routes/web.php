@@ -12,6 +12,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource ('User', UserController::class);
 
 
 Route::get('/dashboard', function () {
@@ -33,7 +34,7 @@ Route::get('/User/create/{id}', [UserController::class, 'create'])->name('User.c
 Route::post('/User/store', [UserController::class, 'store'])->name('User.store');
 
 
-Route::get('/User/create/{id}', [UserController::class, 'create'])->name('User.create');
+
 
 // Orders list for authenticated user
 
